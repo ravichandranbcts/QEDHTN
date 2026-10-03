@@ -1,0 +1,19 @@
+{
+  "_comment": "GRAFIX run config: produces the actual 'proposed framework' numbers (Table 5) and the component leave-one-out ablation (Table 1a/1b/1c), not the gradient-boosting stand-in. Requires PyTorch: pip install torch. Run: python qedhtn_pipeline.py --config run_grafix.json --outdir grafix_tables --max-cardinality 50",
+  "_compute_note": "GRAFIX is now MINIBATCHED and inductive: it builds a kNN graph over at most max_train_nodes reference rows, samples knn_k neighbours per example, and trains/infers in batches of batch_size. Cost is O(batch * knn_k), so it scales to PaySim (6.3M) and IEEE-CIS on CPU without building one giant full-graph. Still, start with UCI/ULB to validate, then scale up; a GPU speeds the big two up a lot.",
+  "_ablation_note": "run_ablation=true runs the leave-one-out over GRAFIX components (-Graph, -GAT, -Transformer, -Fusion) plus the Q-FARM->RBF and Q-FARM->MI feature substitutions, per dataset. This multiplies the number of training runs; expect it to be slow. Set to false first to get just the Table 5 numbers quickly.",
+  "_knobs": "max_train_nodes caps the reference/graph set (default 200000); batch_size (default 4096), knn_k neighbours (default 10), epochs (default 30). Lower max_train_nodes or batch_size if memory is tight; raise epochs for more training.",
+  "seeds": 5,
+  "model": "grafix",
+  "max_cardinality": 50,
+  "run_ablation": true,
+  "max_train_nodes": 200000,
+  "batch_size": 4096,
+  "knn_k": 10,
+  "epochs": 30,
+  "datasets": {
+    "UCI/ULB":  {"path": "data/creditcard.csv", "label": "Class"},
+    "IEEE-CIS": {"path": "data/ieee_cis.csv", "label": "isFraud", "max_cardinality": 50},
+    "PaySim":   {"path": "data/paysim.csv",   "label": "isFraud"}
+  }
+}

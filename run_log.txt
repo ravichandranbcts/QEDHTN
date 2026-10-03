@@ -1,0 +1,76 @@
+=== installing dependencies === 
+  WARNING: The scripts pip.exe, pip3.12.exe and pip3.exe are installed in 'C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: C:\Users\Dakshitha\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\python.exe -m pip install --upgrade pip
+  WARNING: The scripts f2py.exe and numpy-config.exe are installed in 'C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+=== preparing datasets === 
+creditcard.csv  rows=284,807 fraud=492 <- data\creditcard.csv
+paysim.csv      rows=6,362,620 fraud=8,213 <- data\PS_20174392719_1491204439457_log.csv
+ieee_cis.csv    rows=590,540 cols=433 fraud=20,663 <- train_transaction.csv+train_identity.csv
+
+Ready files are in ./data/. Now run:
+    python qedhtn_pipeline.py --config run.example.json --outdir all_tables --max-cardinality 50
+=== running pipeline === 
+C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py:372: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+  cat_cols = list(X.select_dtypes(include=["object", "category"]).columns)
+      capped 6 categorical column(s) at max_cardinality=50
+Traceback (most recent call last):
+  File "C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py", line 525, in <module>
+    main()
+  File "C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py", line 519, in main
+    run_config(cfg, args.outdir)
+  File "C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py", line 432, in run_config
+    X, y = load_dataset(name, spec["path"], spec["label"], max_cardinality=maxcard)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py", line 401, in load_dataset
+    return preprocess(df, label_col, max_cardinality=max_cardinality)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py", line 393, in preprocess
+    X = SimpleImputer(strategy="median").fit_transform(X)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\utils\_set_output.py", line 327, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\base.py", line 969, in fit_transform
+    return self.fit(X, **fit_params).transform(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\impute\_base.py", line 448, in fit
+    X = self._validate_input(X, in_fit=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\impute\_base.py", line 356, in _validate_input
+    X = validate_data(
+        ^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\utils\validation.py", line 3041, in validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\sklearn\utils\validation.py", line 1100, in check_array
+    if np.may_share_memory(array, array_orig):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\generic.py", line 2024, in __array__
+    values = self._values
+             ^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\frame.py", line 1114, in _values
+    return ensure_wrapped_if_datetimelike(self.values)
+                                          ^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\frame.py", line 16687, in values
+    return self._mgr.as_array()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\internals\managers.py", line 1885, in as_array
+    arr = self._interleave(dtype=dtype, na_value=na_value)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\internals\managers.py", line 1926, in _interleave
+    arr = blk.get_values(dtype)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Dakshitha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pandas\core\internals\blocks.py", line 2158, in get_values
+    return self.values.astype(_dtype_obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+MemoryError
+ 
+===== FINISHED ===== 

@@ -1,0 +1,13 @@
+{
+  "_comment": "Run config for qedhtn_pipeline.py. Point each dataset at your real CSV and its fraud-label column. model='sklearn' runs anywhere; model='grafix' needs PyTorch and enables the component ablation. Every table is produced as mean +/- SD over `seeds` runs; nothing is hand-entered.",
+  "_max_cardinality": "Caps each categorical column at its top-K categories before one-hot encoding (the rest bucket into __other__), so IEEE-CIS does not exhaust memory. 50 is a good default; override per dataset below, or pass --max-cardinality on the command line. Use 0 to disable.",
+  "seeds": 5,
+  "model": "sklearn",
+  "max_cardinality": 50,
+  "run_ablation": false,
+  "datasets": {
+    "IEEE-CIS": {"path": "data/ieee_cis.csv", "label": "isFraud", "max_cardinality": 50},
+    "PaySim":   {"path": "data/paysim.csv",   "label": "isFraud"},
+    "UCI/ULB":  {"path": "data/creditcard.csv", "label": "Class"}
+  }
+}

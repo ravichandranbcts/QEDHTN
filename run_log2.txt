@@ -1,0 +1,6 @@
+=== running pipeline (retry) === 
+C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py:383: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+  cat_cols = list(X.select_dtypes(include=["object", "category"]).columns)
+C:\Users\Dakshitha\Downloads\QEDHTN_Revision_3\qedhtn_pipeline.py:407: Pandas4Warning: The copy keyword is deprecated and will be removed in a future version. Copy-on-Write is active in pandas since 3.0 which utilizes a lazy copy mechanism that defers copies until necessary. Use .copy() to make an eager copy if necessary.
+  X = X.astype(np.float32, copy=False).to_numpy()
